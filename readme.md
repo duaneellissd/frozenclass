@@ -6,11 +6,11 @@ This becomes more of a problem when your python classes get big and complex.
 ## For example
 
 ```
-	
-	foo = SomeClass()
-	foo.spelled_correctly = True
-	foo.speled_correctly = False
-	foo.spelled_corectly = False
+    
+    foo = SomeClass()
+    foo.spelled_correctly = True
+    foo.speled_correctly = False
+    foo.spelled_corectly = False
 ```
 
 This ends up causing no end of little problems, and finding where this
@@ -22,8 +22,8 @@ occurs is sometimes non-trivial.
 
 ```
     from frozenclass import FrozenClass
-	
-	@FrozenClass
+    
+    @FrozenClass
     class FooBar():
          def __init__( self ):
              self.x = 42
@@ -35,22 +35,22 @@ occurs is sometimes non-trivial.
              self._freeze()
 
     foo = FooBar()
-	foo.x = 42 # this works
-	foo.bang = "this fails"
-	
-	# you can also thaw, modify then refreeze
-	foo._thaw()
-	foo.changed = True
-	foo._freeze()
-	
-	# you can also debug things
-	foo._freeze_enable_tracking()
+    foo.x = 42 # this works
+    foo.bang = "this fails"
+    
+    # you can also thaw, modify then refreeze
+    foo._thaw()
+    foo.changed = True
+    foo._freeze()
+    
+    # you can also debug things
+    foo._freeze_enable_tracking()
 
     foo._thaw()
     foo.wow = 1234
      
-	 # Then later in your code, or in the debugger
-	 foo._freeze_print_birthplace()
-	 # will produce a nice human report showing where the attibute where defined.
+     # Then later in your code, or in the debugger
+     foo._freeze_print_birthplace()
+     # will produce a nice human report showing where the attibute where defined.
 ```
 

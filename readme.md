@@ -47,9 +47,10 @@ occurs is sometimes non-trivial.
     foo.changed = True
     foo._freeze()
     
-    # you can also debug things
+    # Enable tracking where attributes where created
     foo._freeze_enable_tracking()
 
+    # add an attribute
     foo._thaw()
     foo.wow = 1234
      

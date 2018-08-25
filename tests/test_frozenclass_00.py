@@ -36,6 +36,22 @@ class TestClassB( TestClassA ):
         self.test_thaw()
         # This should fail
         self.should_fail = 42+1
+
+@FrozenClass
+class DocExample():
+    def __init__( self ):
+        self.x = 42
+    def this_fails(self):
+        # Assuming the class is frozen...
+        self.kabang = "This will raise an exception"
+    def this_works(self):
+        # Assuming the class is frozen
+        self._thaw()
+        # It's not froze so we can add something
+        self.water = "not frozen"
+        # And freeze again
+        self._freeze()
+        
         
 class  Test_01(TestCase):
     def test_10_decorate(self):
@@ -46,14 +62,18 @@ class  Test_01(TestCase):
         # Test complete, we can create the class.
 
     def test_15_doc_example(self):
-        x = TestClassA()
-        x.foo = 999
+        x = DocExample()
         x.this_works()
         with self.assertRaises( FrozenError ):
-            x.bar = 'Ka Bang Fails'
-        with self.assertRaises( FrozenError ):
             x.this_fails()
-            
+
+        with self.assertRaises( FrozenError ):
+            x.bang = "this should fail"
+
+        x._freeze_enable_tracking()
+        x._thaw()
+        x.changed = True
+        x._freeze_print_birthplace()
         # Test complete
     
         
@@ -106,11 +126,20 @@ class  Test_01(TestCase):
         x = TestClassB()
         print("")
         print(dir(x))
+        print("track-enable")
         x._freeze_enable_tracking()
+        print("thaw")
         x._thaw()
+        print("Add")
         x.create_me_baby = True
-        #self.assertTrue( len( x.__frozen_where ) == 1 )
-        print("wheres: %s" % x.__frozen_where.keys())
+        print("add-done")
+        print(dir(x))
+        try:
+            keys = x.__frozen_where.keys()
+            print("x.__frozen_keys: %s" % keys)
+            print("enabled = %s" % x.__frozen_where['__frozen_track_where'])
+        except Exception as e:
+            print("E=%s" % e)
         self.assertTrue( 'create_me_baby' in x.__frozen_where )
         x._print_attribute_birthplace()
 

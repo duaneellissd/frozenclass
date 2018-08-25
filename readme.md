@@ -20,7 +20,7 @@ occurs is sometimes non-trivial.
 
 ## usage
 
-```
+```python
     from frozenclass import FrozenClass
     
     @FrozenClass

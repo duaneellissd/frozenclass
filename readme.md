@@ -1,9 +1,9 @@
-A simple Frozen Class Decorator for Python
+# A simple Frozen Class Decorator for Python
 
 Often it is easy to create bugs in your python code by spelling attributes wrong.
 This becomes more of a problem when your python classes get big and complex.
 
-for example
+## For example
 
 ```
 	
@@ -16,8 +16,9 @@ This ends up causing no end of little problems.
 
 This module aims to make it easier to not do the above..
 
+## usage
+
 ```
-usage:
     from frozenclass import FrozenClass
 	
 	@FrozenClass

@@ -122,24 +122,3 @@ class  Test_01(TestCase):
         with self.assertRaises( FrozenError ):
             x.test_thawfreeze()
 
-    def test_70_print_where(self):
-        x = TestClassB()
-        print("")
-        print(dir(x))
-        print("track-enable")
-        x._freeze_enable_tracking()
-        print("thaw")
-        x._thaw()
-        print("Add")
-        x.create_me_baby = True
-        print("add-done")
-        print(dir(x))
-        try:
-            keys = x.__frozen_where.keys()
-            print("x.__frozen_keys: %s" % keys)
-            print("enabled = %s" % x.__frozen_where['__frozen_track_where'])
-        except Exception as e:
-            print("E=%s" % e)
-        self.assertTrue( 'create_me_baby' in x.__frozen_where )
-        x._print_attribute_birthplace()
-

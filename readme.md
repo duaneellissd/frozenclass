@@ -28,14 +28,14 @@ occurs is sometimes non-trivial.
          def __init__( self ):
              self.x = 42
         def this_fails(self):
-			 # Assuming the class is frozen...
+             # Assuming the class is frozen...
              self.kabang = "This will raise an exception"
         def this_works(self):
-			 # Assuming the class is frozen
+             # Assuming the class is frozen
              self._thaw()
-			 # It's not froze so we can add something
+             # It's not froze so we can add something
              self.water = "not frozen"
-			 # And freeze again
+             # And freeze again
              self._freeze()
 
     foo = FooBar()

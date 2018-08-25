@@ -12,9 +12,11 @@ This becomes more of a problem when your python classes get big and complex.
 	foo.speled_correctly = False
 	foo.spelled_corectly = False
 ```
-This ends up causing no end of little problems.
 
-This module aims to make it easier to not do the above..
+This ends up causing no end of little problems, and finding where this
+occurs is sometimes non-trivial.
+
+*The Goal* This module aims to make it easier to not do the above..
 
 ## usage
 

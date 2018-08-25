@@ -3,6 +3,11 @@
 Often it is easy to create bugs in your python code by spelling attributes wrong.
 This becomes more of a problem when your python classes get big and complex.
 
+## Installation Directly from Git Hub:
+```
+bash$ pip3 install git+https://github.com/duaneellissd/frozenclass.git
+```
+
 ## For example
 
 ```

@@ -2,7 +2,7 @@
 from setuptools import setup
 
 setup( name='frozenclass',
-       version='1.0',
+       version='1.1',
        description='Class decorator to prevent attribute spelling mistakes',
        long_description='This decorator helps prevent simple spelling typos for class attributes by introducing a freeze() and thaw() methods',
        url='http://github.com/duaneellissd/frozenclass',

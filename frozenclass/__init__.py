@@ -18,7 +18,6 @@ __all__ = ['FrozenError', 'FrozenClass']
 class FrozenError( Exception ):
     pass
 
-
 def FrozenClass(cls):
     '''
     This class decorator is used to stop human spelling mistakes
@@ -63,6 +62,7 @@ def FrozenClass(cls):
 
     # Provide default values only if not already present
     cls.__frozen = False
+    cls.__frozen_stack = []
     '''Current state, use self._freeze() or self._thaw() to change'''
     
     cls.__frozen_auto_freeze = True
@@ -122,20 +122,38 @@ def FrozenClass(cls):
 
     # The callable to change state to frozen
     cls._freeze = freeze
+
+    def pop_stack(self):
+        self.__dict__[ '__frozen' ] = self.__dict__['__frozen_stack'].pop()
+
+    # The callable to change state to frozen
+    cls._freezePop = pop_stack
+    cls._thawPop   = pop_stack
+
+    def freezePush( self ):
+        self.__dict__['__frozen_stack'].append( self.__dict__['__frozen'] )
+        self.__dict__['__frozen' ] = True
         
+    def thawPush( self ):
+        self.__dict__['__frozen_stack'].append( self.__dict__['__frozen'] )
+        self.__dict__['__frozen' ] = False
+        
+    cls._freezePush = freezePush
+    cls._thawPush   = thawPush
+    
     def init_decorator(func):
         @wraps(func)
         def wrapper( self, *args, **kwargs ):
             old = self.__frozen
             if (not old) and (self.__frozen_auto_freeze):
                 self.__frozen = False
+                self.__frozen_stack = []
             # call the init function
             func(self, *args, **kwargs)
             if self.__frozen_auto_freeze:
                 old = True
             self.__frozen = old
         return wrapper
-
     
     # Decorate the init function
     cls.__init__ = init_decorator( cls.__init__ )

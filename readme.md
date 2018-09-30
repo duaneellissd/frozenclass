@@ -52,6 +52,18 @@ occurs is sometimes non-trivial.
     foo.changed = True
     foo._freeze()
     
+	# If you don't know the "frozen state"
+	foo._thawPush()
+	foo.AddThisHere = 123
+	# back to previous thaw state
+	foo._thawPop()
+	
+	foo._freezePush()
+	# foo is now frozen and is sort of "readonly-ish"
+	some_function( foo )
+	# go back to previous FreezeState
+	foo._freezePop()
+	
     # Enable tracking where attributes where created
     foo._freeze_enable_tracking()
 

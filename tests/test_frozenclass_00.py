@@ -122,3 +122,36 @@ class  Test_01(TestCase):
         with self.assertRaises( FrozenError ):
             x.test_thawfreeze()
 
+    def test_70_test_pushpop(self):
+        x = TestClassB();
+        x.bar = 123
+        x._thawPush()
+        x.BB1 = 'bb1'
+        x._thawPush()
+        x.BB2 = 'bb2'
+        x._freezePush()
+        # protected now
+        with self.assertRaises( FrozenError ):
+            x.BB3 = 1234
+        x._freezePop()
+        # back to unprotected
+        x.BB2 = 123
+        x._thawPop()
+        # still unprotected
+        x.BB4 = 123
+        x._thawPop()
+        # protected
+        x.bar = 4455
+        with self.assertRaises( FrozenError ):
+            x.bang4 = 'ka-pow'
+        # Underflow the stack
+        with self.assertRaises( IndexError ):
+            x._thawPop()
+        with self.assertRaises( IndexError ):
+            x._freezePop()
+        # Done
+        
+        
+        
+            
+            
